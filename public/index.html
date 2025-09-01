@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turbidity Water Quality Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Aqua Monitor</h1>
+            <nav class="nav">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#monitoring" class="nav-link">Monitoring</a>
+                <a href="#data" class="nav-link">Data</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="overview" class="hero">
+            <div class="container">
+                <h2 class="hero-title">Water Turbidity Monitoring System</h2>
+                <p class="hero-subtitle">Real-time water quality assessment and analysis</p>
+            </div>
+        </section>
+
+        <section id="monitoring" class="monitoring-section">
+            <div class="container">
+                <div class="monitoring-grid">
+                    <div class="card primary-card">
+                        <div class="card-header">
+                            <h3>Current Turbidity</h3>
+                            <span class="status-indicator good"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value">
+                                <span class="value" id="turbidity-value">2.3</span>
+                                <span class="unit">NTU</span>
+                            </div>
+                            <div class="metric-status">Excellent Quality</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Temperature</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-value">
+                                <span class="value" id="temperature-value">22.5</span>
+                                <span class="unit">°C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>System Status</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="system-status">
+                                <span class="status-text">Online</span>
+                                <div class="last-update">Last updated: <span id="last-update">Just now</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data" class="data-section">
+            <div class="container">
+                <h2 class="section-title">Historical Data</h2>
+                <div class="chart-container">
+                    <canvas id="turbidityChart"></canvas>
+                </div>
+                
+                <div class="data-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">24h Average</span>
+                        <span class="summary-value">2.1 NTU</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Peak Today</span>
+                        <span class="summary-value">3.2 NTU</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Quality Rating</span>
+                        <span class="summary-value quality-excellent">Excellent</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Aqua Monitor System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
