@@ -1,108 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Turbidity Water Quality Monitoring System</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">Aqua Monitor</h1>
-            <nav class="nav">
-                <a href="#overview" class="nav-link">Overview</a>
-                <a href="#monitoring" class="nav-link">Monitoring</a>
-                <a href="#data" class="nav-link">Data</a>
-            </nav>
-        </div>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-slate-50 font-sans text-slate-800">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+        <h1 class="text-2xl font-bold text-blue-600">Aqua Monitor</h1>
+        <nav class="flex gap-8">
+          <a
+            href="#overview"
+            class="text-slate-500 hover:text-blue-600 font-medium transition"
+            >Overview</a
+          >
+          <a
+            href="#monitoring"
+            class="text-slate-500 hover:text-blue-600 font-medium transition"
+            >Monitoring</a
+          >
+          <a
+            href="#data"
+            class="text-slate-500 hover:text-blue-600 font-medium transition"
+            >Data</a
+          >
+        </nav>
+      </div>
     </header>
 
-    <main class="main">
-        <section id="overview" class="hero">
-            <div class="container">
-                <h2 class="hero-title">Water Turbidity Monitoring System</h2>
-                <p class="hero-subtitle">Real-time water quality assessment and analysis</p>
-            </div>
-        </section>
+    <main>
+      <section
+        id="overview"
+        class="text-center py-16 bg-gradient-to-br from-blue-600 to-blue-400 text-white"
+      >
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-4xl font-bold mb-4">
+            Water Turbidity Monitoring System
+          </h2>
+          <p class="text-lg opacity-90">
+            Real-time water quality assessment and analysis
+          </p>
+        </div>
+      </section>
 
-        <section id="monitoring" class="monitoring-section">
-            <div class="container">
-                <div class="monitoring-grid">
-                    <div class="card primary-card">
-                        <div class="card-header">
-                            <h3>Current Turbidity</h3>
-                            <span class="status-indicator good"></span>
-                        </div>
-                        <div class="card-body">
-                            <div class="metric-value">
-                                <span class="value" id="turbidity-value">2.3</span>
-                                <span class="unit">NTU</span>
-                            </div>
-                            <div class="metric-status">Excellent Quality</div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Temperature</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="metric-value">
-                                <span class="value" id="temperature-value">22.5</span>
-                                <span class="unit">°C</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>System Status</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="system-status">
-                                <span class="status-text">Online</span>
-                                <div class="last-update">Last updated: <span id="last-update">Just now</span></div>
-                            </div>
-                        </div>
-                    </div>
+      <section id="monitoring" class="py-16">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="bg-gradient-to-br from-blue-600 to-blue-400 text-white rounded-xl p-6 shadow-lg"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium">Current Turbidity</h3>
+                <span
+                  class="status-indicator good w-3 h-3 rounded-full bg-green-500 shadow"
+                ></span>
+              </div>
+              <div>
+                <div class="flex items-baseline gap-2 mb-2">
+                  <span class="text-4xl font-bold value" id="turbidity-value"
+                    >2.3</span
+                  >
+                  <span class="text-base opacity-70">NTU</span>
                 </div>
+                <div class="metric-status text-base">Excellent Quality</div>
+              </div>
             </div>
-        </section>
 
-        <section id="data" class="data-section">
-            <div class="container">
-                <h2 class="section-title">Historical Data</h2>
-                <div class="chart-container">
-                    <canvas id="turbidityChart"></canvas>
+            <div class="bg-white rounded-xl p-6 shadow border border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium">Temperature</h3>
+              </div>
+              <div>
+                <div class="flex items-baseline gap-2 mb-2">
+                  <span class="text-4xl font-bold value" id="temperature-value"
+                    >22.5</span
+                  >
+                  <span class="text-base opacity-70">°C</span>
                 </div>
-                
-                <div class="data-summary">
-                    <div class="summary-item">
-                        <span class="summary-label">24h Average</span>
-                        <span class="summary-value">2.1 NTU</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Peak Today</span>
-                        <span class="summary-value">3.2 NTU</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Quality Rating</span>
-                        <span class="summary-value quality-excellent">Excellent</span>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
+
+            <div class="bg-white rounded-xl p-6 shadow border border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium">System Status</h3>
+              </div>
+              <div class="text-center">
+                <span class="text-green-500 font-semibold text-lg">Online</span>
+                <div class="text-xs text-slate-500 mt-2">
+                  Last updated: <span id="last-update">Just now</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="data" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-center mb-12">Historical Data</h2>
+          <div
+            class="bg-white rounded-xl p-8 mb-8 shadow border border-slate-200"
+            style="height: 400px"
+          >
+            <canvas id="turbidityChart"></canvas>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="text-center bg-slate-50 rounded-lg p-6 border border-slate-200"
+            >
+              <span class="block text-sm text-slate-500 mb-1">24h Average</span>
+              <span class="text-2xl font-bold">2.1 NTU</span>
+            </div>
+            <div
+              class="text-center bg-slate-50 rounded-lg p-6 border border-slate-200"
+            >
+              <span class="block text-sm text-slate-500 mb-1">Peak Today</span>
+              <span class="text-2xl font-bold">3.2 NTU</span>
+            </div>
+            <div
+              class="text-center bg-slate-50 rounded-lg p-6 border border-slate-200"
+            >
+              <span class="block text-sm text-slate-500 mb-1"
+                >Quality Rating</span
+              >
+              <span class="text-2xl font-bold text-green-500">Excellent</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Aqua Monitor System. All rights reserved.</p>
-        </div>
+    <footer class="bg-slate-800 text-white text-center py-8 mt-8">
+      <div class="max-w-6xl mx-auto">
+        <p>&copy; 2025 Aqua Monitor System. All rights reserved.</p>
+      </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

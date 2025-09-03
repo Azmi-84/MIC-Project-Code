@@ -85,7 +85,7 @@ void loop() {
   delay(500);
 
   if (turbidity >= NULL_MIN && turbidity <= NULL_MAX) {
-    onAllMotors();
+    stopAllMotors();
   } 
   else if (turbidity >= TURBID_MIN && turbidity <= TURBID_MAX) {
     handleTurbidWater();

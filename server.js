@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const { SerialPort } = require('serialport');
+const { ReadlineParser } = require('@serialport/parser-readline');
 const { Server } = require('socket.io');
 const path = require('path');
 
@@ -9,6 +10,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 const port = new SerialPort({ path: '/dev/ttyACM0', baudRate: 115200 });
+const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,9 +22,10 @@ port.on('error', (err) => {
   console.error('Serial Port Error:', err);
 });
 
-port.on('data', (data) => {
-  const sensorValue = data.toString().trim();
-  console.log('Sensor Value:', sensorValue);
+// Listen for complete lines from the Arduino
+parser.on('data', (line) => {
+  const sensorValue = line.trim();
+  console.log(sensorValue);
   io.emit('sensorData', sensorValue);
 });
 
