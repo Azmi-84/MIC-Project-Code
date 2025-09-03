@@ -17,27 +17,34 @@
 const int NULL_MIN = 625;
 const int NULL_MAX = 670;
 
-const int CLEAN_MIN = 830;
-const int CLEAN_MAX = 855;
+const int CLEAN_MIN = 725; // 725
+const int CLEAN_MAX = 830; // 830
 
-const int TURBID_MIN = 725;
-const int TURBID_MAX = 755;
+const int TURBID_MIN = 840; // 840
+const int TURBID_MAX = 900; // 900
 
 int turbidity = 0;
 
+enum Mode { AUTO, TURBID, CLEAN, STOP };
+Mode mode = AUTO;
+
 void setup() {
   Serial.begin(115200);
-
   setupMotorPins();
   stopAllMotors();  // Ensure all motors are OFF at startup
+  Serial.println("System Ready. Serial Commands: T = turbid, C = clean, A = auto, S = stop all motors");
 }
 
 // Pin Mode Setup
 void setupMotorPins() {
-  pinMode(MOTOR_DRIVER_ONE_PIN_ONE, OUTPUT); pinMode(MOTOR_DRIVER_ONE_PIN_TWO, OUTPUT);
-  pinMode(MOTOR_DRIVER_ONE_PIN_THREE, OUTPUT); pinMode(MOTOR_DRIVER_ONE_PIN_FOUR, OUTPUT);
-  pinMode(MOTOR_DRIVER_TWO_PIN_ONE, OUTPUT); pinMode(MOTOR_DRIVER_TWO_PIN_TWO, OUTPUT);
-  pinMode(MOTOR_DRIVER_TWO_PIN_THREE, OUTPUT); pinMode(MOTOR_DRIVER_TWO_PIN_FOUR, OUTPUT);
+  pinMode(MOTOR_DRIVER_ONE_PIN_ONE, OUTPUT);
+  pinMode(MOTOR_DRIVER_ONE_PIN_TWO, OUTPUT);
+  pinMode(MOTOR_DRIVER_ONE_PIN_THREE, OUTPUT);
+  pinMode(MOTOR_DRIVER_ONE_PIN_FOUR, OUTPUT);
+  pinMode(MOTOR_DRIVER_TWO_PIN_ONE, OUTPUT);
+  pinMode(MOTOR_DRIVER_TWO_PIN_TWO, OUTPUT);
+  pinMode(MOTOR_DRIVER_TWO_PIN_THREE, OUTPUT);
+  pinMode(MOTOR_DRIVER_TWO_PIN_FOUR, OUTPUT);
 }
 
 // Motor Control Helpers
@@ -79,24 +86,49 @@ void onAllMotorsReverse() {
 }
 
 void loop() {
+  // Check serial commands
+  if (Serial.available() > 0) {
+    char cmd = Serial.read();
+    if (cmd == 'T' || cmd == 't') {
+      mode = TURBID;
+      Serial.println("Mode: FORCED TURBID");
+    } else if (cmd == 'C' || cmd == 'c') {
+      mode = CLEAN;
+      Serial.println("Mode: FORCED CLEAN");
+    } else if (cmd == 'A' || cmd == 'a') {
+      mode = AUTO;
+      Serial.println("Mode: AUTO");
+    } else if (cmd == 'S' || cmd == 's') {
+      mode = STOP;
+      stopAllMotors();
+      Serial.println("Mode: ALL STOPPED");
+    }
+  }
+
   turbidity = analogRead(TURBIDITY_PIN);
   Serial.print("Turbidity: ");
   Serial.println(turbidity);
-  delay(500);
 
-  if (turbidity >= NULL_MIN && turbidity <= NULL_MAX) {
+  if (mode == STOP) {
     stopAllMotors();
-  } 
-  else if (turbidity >= TURBID_MIN && turbidity <= TURBID_MAX) {
+    Serial.println("Motors stopped by user command.");
+  } else if (mode == AUTO) {
+    if (turbidity >= NULL_MIN && turbidity <= NULL_MAX) {
+      stopAllMotors();
+    } else if (turbidity >= TURBID_MIN && turbidity <= TURBID_MAX) {
+      handleTurbidWater();
+    } else if (turbidity >= CLEAN_MIN && turbidity <= CLEAN_MAX) {
+      handleCleanWater();
+    } else {
+      Serial.println("Nothing to do!!!");
+      stopAllMotors();
+    }
+  } else if (mode == TURBID) {
     handleTurbidWater();
-  } 
-  else if (turbidity >= CLEAN_MIN && turbidity <= CLEAN_MAX) {
+  } else if (mode == CLEAN) {
     handleCleanWater();
-  } 
-  else {
-    Serial.println("Nothing to do!!!");
-    stopAllMotors();
   }
+  delay(500);
 }
 
 // Condition Handlers
